@@ -1,0 +1,126 @@
+unit laporantransaksiservice;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, Buttons, ExtCtrls;
+
+type
+  TFlaporanservice = class(TForm)
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Shape1: TShape;
+    Label4: TLabel;
+    Label5: TLabel;
+    Edit1: TEdit;
+    ComboBox1: TComboBox;
+    DTPawal: TDateTimePicker;
+    DTPakhir: TDateTimePicker;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure ComboBox1Change(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure DTPawalChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure ComboBox1KeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Flaporanservice: TFlaporanservice;
+
+implementation
+
+uses datakoneksi,dateutils,ReportNota,NotaReport;
+
+{$R *.dfm}
+
+procedure TFlaporanservice.BitBtn1Click(Sender: TObject);
+begin
+  DM.QueryRservice2.SQL.Clear;
+  DM.QueryRservice2.SQL.Add('select*from DetailService where faktur='+QuotedStr(edit1.Text)+'');
+  DM.QueryRservice2.Open;
+
+  DM.QueryRservice1.SQL.Clear;
+  DM.QueryRservice1.SQL.Add('select*from Service where faktur='+QuotedStr(edit1.Text)+'');
+  DM.QueryRservice1.Open;
+  NotaService.Preview;
+  Edit1.Text := '';
+end;
+
+procedure TFlaporanservice.ComboBox1Change(Sender: TObject);
+begin
+  if ComboBox1.ItemIndex=0 then
+    Begin
+      DTPawal.Format:='dd MMM yyy';
+      Label5.Visible:=True;
+      DTPakhir.Visible:=True;
+    end
+  else
+  if ComboBox1.ItemIndex=1 then
+    Begin
+      DTPawal.Format:='MMMM yyyy';
+      Label5.Visible:=False;
+      DTPakhir.Visible:=False;
+  end
+  else
+    Begin
+      DTPawal.Format:='yyyy';
+      DTPakhir.Visible:=False;
+      Label5.Visible:=False;
+    end
+end;
+
+procedure TFlaporanservice.BitBtn2Click(Sender: TObject);
+  var Sintak:String;
+begin
+  if ComboBox1.ItemIndex=0 then
+    Begin
+      Sintak:= 'SELECT * from Service where Tanggal>=#'+FormatDateTime('yyyy/MM/dd',DTPawal.Date)+'# and Tanggal<=#'+FormatDateTime('yyyy/MM/dd',DTPakhir.Date)+'#'
+    end
+  else
+  if ComboBox1.ItemIndex=1 then
+    Begin
+      Sintak:= 'SELECT * from Service where month(Tanggal)='+FormatDateTime('MM',DTPawal.Date)+' and year(Tanggal)='+FormatDateTime('yyyy',DTPawal.Date)+''
+    end
+  else
+    Begin
+      Sintak:= 'SELECT * from Service where year(Tanggal)='+FormatDateTime('yyyy',DTPawal.Date)+''
+    end;
+
+      DM.RService1.Close;
+      DM.RService1.SQL.Clear;
+      DM.RService1.SQL.Add(Sintak);
+      DM.RService1.Open;
+
+
+    if not DM.RService1.Eof then
+      Freportservice.Preview
+    else
+      MessageDlg('Data Tidak Ditemukan ',mtError,[mbOK],0)
+end;
+
+procedure TFlaporanservice.DTPawalChange(Sender: TObject);
+begin
+  DTPakhir.Date:=EndOfTheMonth(DTPawal.Date)
+end;
+
+procedure TFlaporanservice.FormShow(Sender: TObject);
+begin
+  ComboBox1.ItemIndex:=0;
+  DTPawal.Date:=StartOfTheMonth(now);
+  DTPakhir.Date:=EndOfTheMonth(now)
+end;
+
+procedure TFlaporanservice.ComboBox1KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  key:=#0
+end;
+
+end.

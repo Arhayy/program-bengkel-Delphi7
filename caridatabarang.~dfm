@@ -1,0 +1,166 @@
+object Cdatabarang: TCdatabarang
+  Left = 291
+  Top = 355
+  Width = 633
+  Height = 366
+  Caption = 'Data Barang'
+  Color = 9568255
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  FormStyle = fsStayOnTop
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object GroupBox1: TGroupBox
+    Left = 8
+    Top = 8
+    Width = 601
+    Height = 65
+    Caption = 'Cari Data Berdasarkan'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 232
+      Top = 32
+      Width = 41
+      Height = 16
+      Caption = 'Cari  :'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object RadioButton1: TRadioButton
+      Left = 16
+      Top = 32
+      Width = 113
+      Height = 17
+      Caption = 'Nama'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 0
+    end
+    object RadioButton2: TRadioButton
+      Left = 120
+      Top = 32
+      Width = 113
+      Height = 17
+      Caption = 'Kode'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 1
+    end
+    object Edit1: TEdit
+      Left = 280
+      Top = 32
+      Width = 273
+      Height = 21
+      CharCase = ecUpperCase
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+      OnChange = Edit1Change
+    end
+  end
+  object DBGrid1: TDBGrid
+    Left = 8
+    Top = 80
+    Width = 601
+    Height = 241
+    Color = clWhite
+    DataSource = DM.DataBarang1
+    FixedColor = 9568255
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+    ParentFont = False
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -13
+    TitleFont.Name = 'MS Sans Serif'
+    TitleFont.Style = [fsBold]
+    OnDblClick = DBGrid1DblClick
+    Columns = <
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'KDbarang'
+        Title.Alignment = taCenter
+        Title.Caption = 'Kode'
+        Width = 70
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NMbarang'
+        Title.Alignment = taCenter
+        Title.Caption = 'Nama Barang'
+        Width = 162
+        Visible = True
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'Hrg_beli'
+        Title.Alignment = taCenter
+        Title.Caption = 'Harga Beli'
+        Width = 90
+        Visible = True
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'Hrg_jual'
+        Title.Alignment = taCenter
+        Title.Caption = 'Harga Jual'
+        Width = 90
+        Visible = True
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'Jml_barang'
+        Title.Alignment = taCenter
+        Title.Caption = 'Jumlah'
+        Width = 60
+        Visible = True
+      end
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'Satuan'
+        Title.Alignment = taCenter
+        Width = 90
+        Visible = True
+      end>
+  end
+end
